@@ -317,7 +317,7 @@ const HERITAGE_DATA = [
     const thinking = addMessage('Thinking…', 'chat-msg-bot');
 
     try{
-      const resp = await fetch('/.netlify/functions/chat', {
+      const resp = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, history: history })
@@ -336,7 +336,7 @@ const HERITAGE_DATA = [
       if(history.length > 12) history = history.slice(-12);
     } catch(err){
       thinking.remove();
-      addMessage('Could not reach the assistant. If this is your first time running it, make sure the GEMINI_API_KEY environment variable is set in Netlify.', 'chat-msg-error');
+      addMessage('Could not reach the assistant. Make sure GEMINI_API_KEY is configured in Vercel.', 'chat-msg-error');
     } finally {
       sendBtn.disabled = false;
       inputEl.focus();
