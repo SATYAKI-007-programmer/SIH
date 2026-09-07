@@ -37,6 +37,13 @@
     padding: 0 32px;
   }
 
+  .problem-head{ margin-bottom: 28px; }
+  .section-band{
+    background: var(--cream-deep);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
   /* ---------- NAV ---------- */
   nav{
     position: sticky;

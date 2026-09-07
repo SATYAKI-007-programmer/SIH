@@ -44,7 +44,7 @@
 <section class="section problem" id="problem">
   <div class="wrap problem-grid">
     <div>
-      <div class="section-head" style="margin-bottom:28px;">
+      <div class="section-head problem-head">
         <h2>Most of India's heritage is never found</h2>
       </div>
       <p>Each generation grows up knowing a handful of famous monuments, while thousands of lesser-known traditions, local histories, dialects and dishes stay undocumented — scattered across sources that rarely speak to one another.</p>
@@ -81,7 +81,7 @@
   </div>
 </section>
 
-<section class="section" id="finder" style="background:var(--cream-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+<section class="section section-band" id="finder">
   <div class="wrap">
     <div class="section-head">
       <h2>Find monuments &amp; sites near you</h2>
@@ -119,29 +119,7 @@
   </div>
 </section>
 
-<section class="section" id="chatbot">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Ask the Cultural Guide</h2>
-      <p>A working preview of the AI cultural assistant. Ask about any Indian monument, festival, tradition, or place — it answers from general knowledge, not from the site's own dataset.</p>
-    </div>
-
-    <div class="chat-panel">
-      <div class="chat-messages" id="chat-messages">
-        <div class="chat-msg chat-msg-bot">
-          <p>Namaste! Ask me about a monument, festival, region, or tradition — for example, "What is Bishnupur famous for?" or "When is Durga Puja celebrated?"</p>
-        </div>
-      </div>
-      <div class="chat-input-row">
-        <input type="text" id="chat-input" placeholder="Ask about a place, festival or tradition…" autocomplete="off">
-        <button id="chat-send">Send</button>
-      </div>
-      <p class="chat-hint" id="chat-hint">Powered by a serverless function — the API key stays on the server, never in this page.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="approach" style="background:var(--cream-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+<section class="section section-band" id="approach">
   <div class="wrap">
     <div class="section-head">
       <h2>The first release, and how it's built</h2>
@@ -217,6 +195,28 @@
       <div class="audience-cell"><h3>Students &amp; researchers</h3><p>A verified reference for history, culture and local tradition.</p></div>
       <div class="audience-cell"><h3>Local communities</h3><p>New visibility and economic opportunity for artisans and villages.</p></div>
       <div class="audience-cell"><h3>Policymakers</h3><p>A clearer picture of heritage assets worth protecting and promoting.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="chatbot">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Ask the Cultural Guide</h2>
+      <p>A working preview of the AI cultural assistant. Ask about any Indian monument, festival, tradition, or place — it answers from general knowledge, not from the site's own dataset.</p>
+    </div>
+
+    <div class="chat-panel">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-msg chat-msg-bot">
+          <p>Namaste! Ask me about a monument, festival, region, or tradition — for example, "What is Bishnupur famous for?" or "When is Durga Puja celebrated?"</p>
+        </div>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Ask about a place, festival or tradition…" autocomplete="off">
+        <button id="chat-send">Send</button>
+      </div>
+      <p class="chat-hint" id="chat-hint">Powered by a serverless function — the API key stays on the server, never in this page.</p>
     </div>
   </div>
 </section>
