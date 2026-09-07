@@ -192,8 +192,85 @@ const HERITAGE_DATA = [
   const resultsTitle = document.getElementById('results-title');
   const resultsCount = document.getElementById('results-count');
   const resetBtn = document.getElementById('reset-btn');
+  const mapElement = document.getElementById('heritage-map');
+  const mapStatus = document.getElementById('map-status');
 
   if(!stateSelect) return;
+
+  let heritageMap = null;
+  let geocoder = null;
+  let mapMarkers = [];
+  let mapsReady = false;
+  let pendingSites = [];
+
+  function setMapStatus(message){
+    if(mapStatus) mapStatus.textContent = message;
+  }
+
+  function clearMarkers(){
+    mapMarkers.forEach(marker => marker.setMap(null));
+    mapMarkers = [];
+  }
+
+  function placeSiteMarker(site){
+    geocoder.geocode({ address: `${site.name}, ${site.district}, ${site.state}, India` }, (results, status) => {
+      if(status !== 'OK' || !results[0]) return;
+      const marker = new google.maps.Marker({
+        map: heritageMap,
+        position: results[0].geometry.location,
+        title: site.name
+      });
+      const info = new google.maps.InfoWindow({
+        content: `<strong>${site.name}</strong><br>${site.category}<br>${site.district}, ${site.state}`
+      });
+      marker.addListener('click', () => info.open({ map: heritageMap, anchor: marker }));
+      mapMarkers.push(marker);
+    });
+  }
+
+  function updateMap(sites){
+    pendingSites = sites;
+    if(!mapsReady) return;
+    clearMarkers();
+    if(!sites.length){
+      setMapStatus('No sites are available for this selection.');
+      return;
+    }
+    const visibleSites = sites.slice(0, 25);
+    setMapStatus(`Mapping ${visibleSites.length} of ${sites.length} listed site${sites.length === 1 ? '' : 's'}.`);
+    visibleSites.forEach(placeSiteMarker);
+  }
+
+  async function loadMap(){
+    if(!mapElement) return;
+    try{
+      const configResponse = await fetch('/api/maps-config');
+      const config = await configResponse.json();
+      if(!configResponse.ok || !config.key) throw new Error('Maps key is not configured');
+
+      window.initHeritageMap = () => {
+        heritageMap = new google.maps.Map(mapElement, {
+          center: { lat: 22.5937, lng: 78.9629 },
+          zoom: 5,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: true
+        });
+        geocoder = new google.maps.Geocoder();
+        mapsReady = true;
+        updateMap(pendingSites);
+      };
+
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(config.key)}&callback=initHeritageMap`;
+      script.async = true;
+      script.defer = true;
+      script.onerror = () => setMapStatus('The map could not load. Check the Google Maps API key and enabled APIs.');
+      document.head.appendChild(script);
+    }catch(error){
+      setMapStatus('The map is unavailable. Configure MAPS in Vercel environment variables.');
+    }
+  }
 
   const states = [...new Set(HERITAGE_DATA.map(d => d.state))].sort();
   states.forEach(s => {
@@ -240,6 +317,7 @@ const HERITAGE_DATA = [
     else if(state) title = state;
     resultsTitle.textContent = title;
     resultsCount.textContent = filtered.length + (filtered.length === 1 ? ' site' : ' sites');
+    updateMap(filtered);
 
     resultsArea.innerHTML = '';
 
@@ -285,6 +363,7 @@ const HERITAGE_DATA = [
 
   populateDistricts('');
   render();
+  loadMap();
 })();
 
 // ---------- Chatbot widget ----------

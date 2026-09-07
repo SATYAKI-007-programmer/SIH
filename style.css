@@ -348,6 +348,43 @@
     font-family: inherit;
     padding: 0;
   }
+  .map-panel{
+    margin-top: 28px;
+    border: 1px solid var(--line);
+    background: var(--cream);
+  }
+  .map-panel-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .map-panel-head h3{
+    font-size: 1.2rem;
+  }
+  .map-panel-head p{
+    margin-top: 4px;
+    color: rgba(28,39,64,0.65);
+    font-size: 0.88rem;
+  }
+  .map-badge{
+    color: var(--maroon);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .heritage-map{
+    min-height: 390px;
+    background: var(--cream-deep);
+  }
+  @media (max-width: 620px){
+    .map-panel-head{ flex-direction:column; }
+    .heritage-map{ min-height: 320px; }
+  }
   .finder-results-head{
     margin-top: 40px;
     display:flex;
